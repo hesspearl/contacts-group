@@ -5,13 +5,26 @@ import Header from "./components/header";
 import Body from "./components/body";
 import * as Contacts from "expo-contacts";
 
+type Image={uri?:string;}
+
+type ContactsData={
+  id:string;
+  image?:Image
+  name:string;
+  
+  
+  }
+type TypesContacts = Contacts.Contact & ContactsData
+
 export default function App() {
   //contacts array
-  const [contacts, setContacts] = useState<Array<object>>([]);
+  const [contacts, setContacts] = useState<TypesContacts[]>([]);
   //search array that sent from header
-  const [search, setSearch] = useState<Array<object>>([]);
+  const [search, setSearch] = useState<ContactsData[]>([]);
   // length of selected group array
   const [groupLength, setGroupLength] = useState<number>(0);
+
+ 
 
   useEffect(() => {
     (async () => {
@@ -23,6 +36,8 @@ export default function App() {
           fields: [Contacts.Fields.Name, Contacts.Fields.Image],
           sort: Contacts.SortTypes.FirstName,
         });
+
+        
         setContacts(data);
       }
     })();

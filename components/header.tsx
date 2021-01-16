@@ -4,13 +4,17 @@ import { AntDesign } from "@expo/vector-icons";
 import Title from "./stylingComponents/title";
 import Colors from "../colors";
 
+interface Contacts{
+  name:( string| number)
+}
+
 type props = {
   total: number;
   setSearch: Function;
-  contacts: Array<object>;
+  contacts: Contacts[];
   groupLength: Number;
 };
-const Header = ({ total, setSearch, contacts, groupLength }: props) => {
+const Header:React.FC<props> = ({ total, setSearch, contacts, groupLength }: props) => {
   //input text handler, return search result and send it to parent component App
   const onChangeHandler = (text: string) => {
     //change text to upper case
@@ -18,7 +22,7 @@ const Header = ({ total, setSearch, contacts, groupLength }: props) => {
     //filter the contacts array
     const data = contacts.filter((contact) => {
       //modify the names to upper case
-      const name = contact.name.toUpperCase();
+      const name = contact.name?.toString().toUpperCase() ?? "" ;
       //then check if the text from input is match with names
       //in contacts by using includes
       return name.includes(searchText);
