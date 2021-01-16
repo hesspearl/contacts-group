@@ -11,9 +11,11 @@ import colors from "../../colors";
 import Picture from "./picture";
 
 type props = {
-  uri: ImageSourcePropType;
+
+ uri?:string
+
   onPress: Function;
-  name: string;
+  name: (string | number);
   select: boolean;
 };
 
@@ -25,7 +27,7 @@ export default function card({ uri, name, onPress, select }: props) {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Picture uri={uri} size={50} />
         <View style={{ marginHorizontal: 10 }}>
-          <Title>{name}</Title>
+          <Title>{name.toString()}</Title>
         </View>
       </View>
 

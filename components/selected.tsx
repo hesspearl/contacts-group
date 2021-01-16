@@ -10,10 +10,11 @@ import {
 import Picture from "./stylingComponents/picture";
 import { AntDesign } from "@expo/vector-icons";
 
+type Image={uri?:string;}
 type props = {
   data: Array<{
-    id: number;
-    image: object;
+    id: string;
+    image?:Image
     name: string;
   }>;
   onPress: Function;
@@ -39,7 +40,7 @@ export default function selected({ data, onPress }: props) {
                 </View>
               </TouchableOpacity>
 
-              <Picture size={60} uri={item.item.image} />
+              <Picture size={60} uri={item.item.image?.uri} />
               <View style={{ width: 60, alignItems: "center" }}>
                 <Text
                   ellipsizeMode="tail"
