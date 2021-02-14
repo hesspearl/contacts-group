@@ -58,4 +58,5 @@ type state = {
           contactsArray: [...action.value],
         };
     }
+
   };

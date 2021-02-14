@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Title from "./stylingComponents/title";
-import Colors from "../colors";
+import Colors from "./stylingComponents/colors";
 
 interface Contacts{
   name:( string| number)
@@ -16,7 +16,7 @@ type props = {
 };
 const Header:React.FC<props> = ({ total, setSearch, contacts, groupLength }: props) => {
   //input text handler, return search result and send it to parent component App
-  const onChangeHandler = (text: string) => {
+  const onChangeHandler = (text: string) :void => {
     //change text to upper case
     const searchText = text.toUpperCase();
     //filter the contacts array

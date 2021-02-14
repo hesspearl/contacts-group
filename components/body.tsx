@@ -1,25 +1,27 @@
 import React, { useEffect, useReducer } from "react";
-import { View, StyleSheet, ScrollView,ImageSourcePropType } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  ImageSourcePropType,
+} from "react-native";
 import Card from "./stylingComponents/card";
 import Selected from "./selected";
-import colors from "../colors";
+import colors from "./stylingComponents/colors";
 import * as Contacts from "expo-contacts";
-import {reducer} from "./reducer"
+import { reducer } from "./reducer";
 
-type Image={uri?:string;}
+type Image = { uri?: string };
 
-interface ContactArray{
-    id:string;
-    image?:Image
-    name:string;
-    }
-
-
-
+interface ContactArray {
+  id: string;
+  image?: Image;
+  name: string;
+}
 
 interface props {
   //array from app component
-  contacts:ContactArray[];
+  contacts: ContactArray[];
   //array from header component
   search: ContactArray[];
   groupLength: Function;
@@ -49,7 +51,7 @@ export default function Body({ contacts, search, groupLength }: props) {
   }, [search, contacts, state.items]);
 
   // select contact handler
-  const pressHandler = (item:ContactArray) => {
+  const pressHandler = (item: ContactArray): void => {
     //if selected contact id dont exist
     if (!state.selected[item.id]) {
       dispatch({ type: "add", value: item, selected: item.id });
@@ -61,7 +63,8 @@ export default function Body({ contacts, search, groupLength }: props) {
   };
 
   // function is handle the press in selected component
-  const remove = (id: string) => dispatch({ type: "remove", selected: id });
+  const remove = (id: string): void =>
+    dispatch({ type: "remove", selected: id });
 
   return (
     <View style={{ flex: 1 }}>
@@ -76,7 +79,7 @@ export default function Body({ contacts, search, groupLength }: props) {
               onPress={() => pressHandler(item)}
               uri={item.image?.uri}
               name={item.name}
-              select={state.selected[item.id] ? state.selected[item.id] : false}
+              select={state.selected[item.id] ?? false}
             />
           </View>
         ))}

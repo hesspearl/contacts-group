@@ -7,21 +7,21 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Title from "./title";
-import colors from "../../colors";
+import colors from "./colors";
 import Picture from "./picture";
 
 type props = {
-
- uri?:string
+  uri?: string;
 
   onPress: Function;
-  name: (string | number);
+  name: string | number;
   select: boolean;
 };
 
 export default function card({ uri, name, onPress, select }: props) {
   // onPress execute pressHandler in body component
   // select get true/ false when select contact
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -31,7 +31,7 @@ export default function card({ uri, name, onPress, select }: props) {
         </View>
       </View>
 
-      <TouchableOpacity onPress={() => onPress()}>
+      <TouchableOpacity onPressIn={() => onPress()}>
         {!select ? (
           <View style={styles.circleButton} />
         ) : (
