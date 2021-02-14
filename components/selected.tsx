@@ -10,10 +10,11 @@ import {
 import Picture from "./stylingComponents/picture";
 import { AntDesign } from "@expo/vector-icons";
 
+type Image = { uri?: string };
 type props = {
   data: Array<{
-    id: number;
-    image: object;
+    id: string;
+    image?: Image;
     name: string;
   }>;
   onPress: Function;
@@ -31,15 +32,16 @@ export default function selected({ data, onPress }: props) {
           return (
             <View style={styles.container}>
               <TouchableOpacity
+                activeOpacity={1}
                 style={{ position: "absolute", right: 0, top: 0, zIndex: 1 }}
-                onPress={() => onPress(item.item.id)}
+                onPressIn={() => onPress(item.item.id)}
               >
                 <View style={styles.close}>
                   <AntDesign name="close" size={15} color="white" />
                 </View>
               </TouchableOpacity>
 
-              <Picture size={60} uri={item.item.image} />
+              <Picture size={60} uri={item.item.image?.uri} />
               <View style={{ width: 60, alignItems: "center" }}>
                 <Text
                   ellipsizeMode="tail"

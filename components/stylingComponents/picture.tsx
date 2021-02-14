@@ -3,7 +3,7 @@ import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 type props = {
-  uri: ImageSourcePropType;
+  uri:(string|undefined);
   size: number;
 };
 export default function picture({ uri, size }: props) {
@@ -13,7 +13,7 @@ export default function picture({ uri, size }: props) {
       {uri ? (
         <Image
           style={{ width: size, height: size, borderRadius: 100 }}
-          source={uri}
+          source={{uri :uri}}
         />
       ) : (
         <Ionicons name="md-person" size={30} color="white" />

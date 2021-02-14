@@ -1,68 +1,31 @@
 import React, { useEffect, useReducer } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  ImageSourcePropType,
+} from "react-native";
 import Card from "./stylingComponents/card";
 import Selected from "./selected";
-import colors from "../colors";
+import colors from "./stylingComponents/colors";
+import * as Contacts from "expo-contacts";
+import { reducer } from "./reducer";
+
+type Image = { uri?: string };
+
+interface ContactArray {
+  id: string;
+  image?: Image;
+  name: string;
+}
 
 interface props {
   //array from app component
-  contacts: Array<object>;
+  contacts: ContactArray[];
   //array from header component
-  search: Array<object>;
+  search: ContactArray[];
   groupLength: Function;
 }
-
-type state = {
-  items: Array<object>;
-  contactsArray: Array<object>;
-  selected: {
-    [key: number]: boolean;
-  };
-};
-
-type Action =
-  | { type: "array"; value: Array<object> }
-  | { type: "add"; value: object; selected: number }
-  | { type: "remove"; selected: number };
-
-const reducer = (state: state, action: Action): state => {
-  switch (action.type) {
-    case "add":
-      //add the checked contact to the array
-      //and return true to selected
-
-      return {
-        ...state,
-        items: [...state.items, action.value],
-        selected: {
-          ...state.selected,
-          [action.selected]: true,
-        },
-      };
-
-    case "remove":
-      // remove the unchecked contact from the array
-      let removeItem = state.items.map((i) => i.id).indexOf(action.selected);
-      state.items.splice(removeItem, 1);
-      //and return false to selected
-      return {
-        ...state,
-        items: [...state.items],
-        selected: {
-          ...state.selected,
-          [action.selected]: false,
-        },
-      };
-
-    case "array":
-      // saved contacts array or search array
-
-      return {
-        ...state,
-        contactsArray: [...action.value],
-      };
-  }
-};
 
 export default function Body({ contacts, search, groupLength }: props) {
   const [state, dispatch] = useReducer(reducer, {
@@ -88,7 +51,7 @@ export default function Body({ contacts, search, groupLength }: props) {
   }, [search, contacts, state.items]);
 
   // select contact handler
-  const pressHandler = (item: { id: number }) => {
+  const pressHandler = (item: ContactArray): void => {
     //if selected contact id dont exist
     if (!state.selected[item.id]) {
       dispatch({ type: "add", value: item, selected: item.id });
@@ -100,7 +63,8 @@ export default function Body({ contacts, search, groupLength }: props) {
   };
 
   // function is handle the press in selected component
-  const remove = (id: number) => dispatch({ type: "remove", selected: id });
+  const remove = (id: string): void =>
+    dispatch({ type: "remove", selected: id });
 
   return (
     <View style={{ flex: 1 }}>
@@ -113,9 +77,9 @@ export default function Body({ contacts, search, groupLength }: props) {
           <View key={index}>
             <Card
               onPress={() => pressHandler(item)}
-              uri={item.image}
+              uri={item.image?.uri}
               name={item.name}
-              select={state.selected[item.id] ? state.selected[item.id] : false}
+              select={state.selected[item.id] ?? false}
             />
           </View>
         ))}
