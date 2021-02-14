@@ -32,6 +32,7 @@ export default function selected({ data, onPress }: props) {
           return (
             <View style={styles.container}>
               <TouchableOpacity
+                activeOpacity={1}
                 style={{ position: "absolute", right: 0, top: 0, zIndex: 1 }}
                 onPressIn={() => onPress(item.item.id)}
               >
